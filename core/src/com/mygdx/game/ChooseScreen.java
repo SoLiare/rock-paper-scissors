@@ -50,13 +50,22 @@ public class ChooseScreen extends ScreenAdapter {
 		}
 		batch.end();
 		
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			if (n > 1)
+		n = position(n);
+	}
+	
+	public int position (int n) {
+		if (Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+			if (n > 1) {
 				n = n - 1;
+				return n;
+			}
 		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			if (n < 3)
+		else if (Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+			if (n < 3) {
 				n = n + 1;
+				return n;
+			}
 		}
+		return n;
 	}
 }
