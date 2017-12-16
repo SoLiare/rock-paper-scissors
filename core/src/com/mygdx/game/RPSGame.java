@@ -13,7 +13,7 @@ public class RPSGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new GameScreen(this));
+		setScreen(new ChooseScreen(this));
 	}
 
 	@Override
