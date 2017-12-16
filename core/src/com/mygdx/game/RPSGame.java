@@ -10,10 +10,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class RPSGame extends Game {
 	public SpriteBatch batch;
 	
+	boolean start = false;
+	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new ChooseScreen(this));
+		if(start) {
+			setScreen(new GameScreen(this));
+		}
 	}
 
 	@Override

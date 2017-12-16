@@ -20,6 +20,7 @@ public class ChooseScreen extends ScreenAdapter {
 	
 	public ChooseScreen(RPSGame rpsGame) {
 		this.rpsGame = rpsGame;
+		
 		bg = new Texture("bg.png");
 		rPlayer = new Texture("rPlayer.png");
 		ppPlayer = new Texture("ppPlayer.png");
@@ -51,6 +52,11 @@ public class ChooseScreen extends ScreenAdapter {
 		batch.end();
 		
 		n = position(n);
+		
+		if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+			rpsGame.start = true;
+			rpsGame.create();
+		}
 	}
 	
 	public int position (int n) {
