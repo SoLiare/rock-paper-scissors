@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameScreen extends ScreenAdapter {
-	private RPSGame rpsGame;	
+	private RPSGame rpsGame;
+	private Condition condition;
+	
 	private Texture bg;
 	private Texture rPlayer;
 	private Texture ppPlayer;
@@ -15,6 +17,7 @@ public class GameScreen extends ScreenAdapter {
 	private Texture rBot;
 	private Texture ppBot;
 	private Texture ssBot;
+	
 	boolean newRound = true;
 	int bot = 0;
 	
@@ -44,22 +47,24 @@ public class GameScreen extends ScreenAdapter {
 		else if (rpsGame.card == 3) {
 			batch.draw(ssPlayer, 300, 50);
 		}
+		
 		if (newRound) {
 			bot = random();
 		}
-		
 		if (bot == 1) {
 			batch.draw(rBot, 300, 320);
 		}
-		else if (rpsGame.card == 2) {
+		else if (bot == 2) {
 			batch.draw(ppBot, 300, 320);
 		}
-		else if (rpsGame.card == 3) {
+		else if (bot == 3) {
 			batch.draw(ssBot, 300, 320);
 		}
 		newRound = false;
-		
 		batch.end();
+		
+		condition = new Condition(rpsGame.card, bot);
+		
 	}
 	
 	public int random () {
