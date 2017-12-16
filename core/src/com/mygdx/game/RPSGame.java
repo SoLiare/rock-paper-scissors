@@ -11,6 +11,7 @@ public class RPSGame extends Game {
 	public SpriteBatch batch;
 	
 	boolean start = false;
+	int card = 0;
 	
 	@Override
 	public void create () {

@@ -55,6 +55,7 @@ public class ChooseScreen extends ScreenAdapter {
 		
 		if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 			rpsGame.start = true;
+			rpsGame.card = n;
 			rpsGame.create();
 		}
 	}
