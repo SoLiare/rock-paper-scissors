@@ -17,6 +17,10 @@ public class ChooseScreen extends ScreenAdapter {
 	private Texture ssFaded;
 	
 	int n = 2;
+	int xL = 50;
+	int xC = 300;
+	int xR = 550;
+	int y = 185;
 	
 	public ChooseScreen(RPSGame rpsGame) {
 		this.rpsGame = rpsGame;
@@ -35,19 +39,19 @@ public class ChooseScreen extends ScreenAdapter {
 		batch.begin();
 		batch.draw(bg, 0, 0);
 		if (n == 2) {
-			batch.draw(rFaded, 50, 185);
-			batch.draw(ppPlayer, 300, 185);
-			batch.draw(ssFaded, 550, 185);
+			batch.draw(rFaded, xL, y);
+			batch.draw(ppPlayer, xC, y);
+			batch.draw(ssFaded, xR, y);
 		}
 		else if (n == 1) {
-			batch.draw(rPlayer, 50, 185);
-			batch.draw(ppFaded, 300, 185);
-			batch.draw(ssFaded, 550, 185);
+			batch.draw(rPlayer, xL, y);
+			batch.draw(ppFaded, xC, y);
+			batch.draw(ssFaded, xR, y);
 		}
 		else {
-			batch.draw(rFaded, 50, 185);
-			batch.draw(ppFaded, 300, 185);
-			batch.draw(ssPlayer, 550, 185);
+			batch.draw(rFaded, xL, y);
+			batch.draw(ppFaded, xC, y);
+			batch.draw(ssPlayer, xR, y);
 		}
 		batch.end();
 		

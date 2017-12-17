@@ -32,6 +32,16 @@ public class GameScreen extends ScreenAdapter {
 	int mash = 0;
 	int button = 4;
 	int time = 0;
+	int limits = 200;
+	
+	int x = 300;
+	int yPlayer = 50;
+	int yBot = 320;
+	
+	int xBut = 50;
+	int yBut = 250;
+	
+	boolean show = true;
 	
 	public GameScreen (RPSGame rpsGame) {
 		this.rpsGame = rpsGame;
@@ -49,70 +59,70 @@ public class GameScreen extends ScreenAdapter {
 		a = new Texture("aButton.png");
 		d = new Texture("dButton.png");
 	}
-	
+
 	public void render (float delta) {
 		SpriteBatch batch = rpsGame.batch;
 		batch.begin();
 		batch.draw(bg, 0, 0);
 		
 		if(rpsGame.card == 1) {
-			batch.draw(rPlayer, 300, 50);
+			batch.draw(rPlayer, x, yPlayer);
 		}
 		else if(rpsGame.card == 2) {
-			batch.draw(ppPlayer, 300, 50);
+			batch.draw(ppPlayer, x, yPlayer);
 		}
 		else if(rpsGame.card == 3) {
-			batch.draw(ssPlayer, 300, 50);
+			batch.draw(ssPlayer, x, yPlayer);
 		}
 		
 		if(newRound) {
 			bot = random();
 		}
 		if(bot == 1) {
-			batch.draw(rBot, 300, 320);
+			batch.draw(rBot, x, yBot);
 		}
 		else if(bot == 2) {
-			batch.draw(ppBot, 300, 320);
+			batch.draw(ppBot, x, yBot);
 		}
 		else if(bot == 3) {
-			batch.draw(ssBot, 300, 320);
+			batch.draw(ssBot, x, yBot);
 		}
 		
 		if(newRound) {
 			condition = new Condition(rpsGame.card, bot);
 		}
 		
-		if(condition.buttonNum > 0 && time < 250) {
+		if(condition.buttonNum > 0 && time < limits) {
 			if(button == 4) {
 				button = condition.random();
 				time = 0;
 			}
 			
 			if(button == 0) {
-				batch.draw(w, 50, 250);
+				batch.draw(w, xBut, yBut);
 
-				if(Gdx.input.isKeyJustPressed(Keys.W)) {
+				if(Gdx.input.isKeyPressed(Keys.W)) {
 					mash = mash + 1;
 				}
 			}
 			else if(button == 1) {
-				batch.draw(s, 50, 250);
+				batch.draw(s, xBut, yBut);
 				
-				if(Gdx.input.isKeyJustPressed(Keys.S)) {
+				if(Gdx.input.isKeyPressed(Keys.S)) {
 					mash = mash + 1;
 				}
 			}
 			else if(button == 2) {
-				batch.draw(a, 50, 250);
+				batch.draw(a, xBut, yBut);
 				
-				if(Gdx.input.isKeyJustPressed(Keys.A)) {
+				if(Gdx.input.isKeyPressed(Keys.A)) {
 					mash = mash + 1;
 				}
 			}
 			else if(button == 3) {
-				batch.draw(d, 50, 250);
+				batch.draw(d, xBut, yBut);
 				
-				if(Gdx.input.isKeyJustPressed(Keys.D)) {
+				if(Gdx.input.isKeyPressed(Keys.D)) {
 					mash = mash + 1;
 				}
 			}
@@ -129,27 +139,36 @@ public class GameScreen extends ScreenAdapter {
 			}
 			
 			time = time + 1;
-			System.out.println(time);
 		}
-		else {
+		else if(condition.buttonNum > 0 && time >= limits) {
 			rpsGame.start = false;
 			batch.draw(gameOver, 0, 0);
+			if(show) {
+				System.out.println("Level: " + rpsGame.level);
+				if(rpsGame.level > rpsGame.highScore) {
+					rpsGame.highScore = rpsGame.level;
+				}
+				System.out.println("Highest Level: " + rpsGame.highScore);
+				
+				show = false;
+			}
 			if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+				rpsGame.level = 0;
 				rpsGame.goal = 10;
 				rpsGame.create();
 			}
 		}
-		
-		newRound = false;
-		
-		if(condition.buttonNum == 0) {
+		else if(condition.buttonNum == 0) {
 			rpsGame.start = false;
 			batch.draw(nextStage, 0, 0);
 			if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 				rpsGame.goal = rpsGame.goal + 5;
+				rpsGame.level = rpsGame.level + 1;
 				rpsGame.create();
 			}
 		}
+		newRound = false;
+		
 		batch.end();
 	}
 	

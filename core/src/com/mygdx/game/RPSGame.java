@@ -13,6 +13,8 @@ public class RPSGame extends Game {
 	boolean start = false;
 	int card = 0;
 	int goal = 10;
+	int level = 0;
+	int highScore = 0;
 	
 	@Override
 	public void create () {
