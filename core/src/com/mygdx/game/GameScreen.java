@@ -6,11 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameScreen extends ScreenAdapter {
 	private RPSGame rpsGame;
 	private Condition condition;
+	private DrawText drawText;
 	private Texture bg;
 	private Texture nextStage;
 	private Texture gameOver;
@@ -40,9 +42,7 @@ public class GameScreen extends ScreenAdapter {
 	
 	int xBut = 50;
 	int yBut = 250;
-	
-	boolean show = true;
-	
+			
 	public GameScreen (RPSGame rpsGame) {
 		this.rpsGame = rpsGame;
 		bg = new Texture("bg.png");
@@ -143,15 +143,9 @@ public class GameScreen extends ScreenAdapter {
 		else if(condition.buttonNum > 0 && time >= limits) {
 			rpsGame.start = false;
 			batch.draw(gameOver, 0, 0);
-			if(show) {
-				System.out.println("Level: " + rpsGame.level);
-				if(rpsGame.level > rpsGame.highScore) {
-					rpsGame.highScore = rpsGame.level;
-				}
-				System.out.println("Highest Level: " + rpsGame.highScore);
-				
-				show = false;
-			}
+			
+			drawText = new DrawText(batch, "Level: " + rpsGame.level + "\nHighest Level: " + rpsGame.highScore, 250, 300);
+			
 			if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 				rpsGame.level = 0;
 				rpsGame.goal = 10;
