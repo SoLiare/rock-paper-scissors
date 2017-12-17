@@ -12,6 +12,7 @@ public class GameScreen extends ScreenAdapter {
 	private RPSGame rpsGame;
 	private Condition condition;
 	private Texture bg;
+	private Texture nextStage;
 	private Texture rPlayer;
 	private Texture ppPlayer;
 	private Texture ssPlayer;
@@ -34,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
 	public GameScreen (RPSGame rpsGame) {
 		this.rpsGame = rpsGame;
 		bg = new Texture("bg.png");
+		nextStage = new Texture("nextStage.png");
 		rPlayer = new Texture("rPlayer.png");
 		ppPlayer = new Texture("ppPlayer.png");
 		ssPlayer = new Texture("ssPlayer.png");
@@ -124,6 +126,14 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 		newRound = false;
+		
+		if(condition.buttonNum == 0) {
+			rpsGame.start = false;
+			batch.draw(nextStage, 0, 0);
+			if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+				rpsGame.create();
+			}
+		}
 		
 		batch.end();
 	}
