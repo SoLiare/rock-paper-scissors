@@ -13,6 +13,7 @@ public class GameScreen extends ScreenAdapter {
 	private Condition condition;
 	private Texture bg;
 	private Texture nextStage;
+	private Texture gameOver;
 	private Texture rPlayer;
 	private Texture ppPlayer;
 	private Texture ssPlayer;
@@ -30,11 +31,13 @@ public class GameScreen extends ScreenAdapter {
 	boolean win = false;
 	int mash = 0;
 	int button = 4;
+	int time = 0;
 	
 	public GameScreen (RPSGame rpsGame) {
 		this.rpsGame = rpsGame;
 		bg = new Texture("bg.png");
 		nextStage = new Texture("nextStage.png");
+		gameOver = new Texture("gameOver.png");
 		rPlayer = new Texture("rPlayer.png");
 		ppPlayer = new Texture("ppPlayer.png");
 		ssPlayer = new Texture("ssPlayer.png");
@@ -48,7 +51,6 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	public void render (float delta) {
-		System.out.println(delta);
 		SpriteBatch batch = rpsGame.batch;
 		batch.begin();
 		batch.draw(bg, 0, 0);
@@ -80,9 +82,10 @@ public class GameScreen extends ScreenAdapter {
 			condition = new Condition(rpsGame.card, bot);
 		}
 		
-		if(condition.buttonNum > 0) {
+		if(condition.buttonNum > 0 && time < 250) {
 			if(button == 4) {
 				button = condition.random();
+				time = 0;
 			}
 			
 			if(button == 0) {
@@ -117,14 +120,26 @@ public class GameScreen extends ScreenAdapter {
 			if(rpsGame.goal == mash) {
 				win = true;
 			}
-		
+			
 			if(win) {
 				mash = 0;
 				condition.buttonNum = condition.buttonNum - 1;
 				button = 4;
 				win = false;
 			}
+			
+			time = time + 1;
+			System.out.println(time);
 		}
+		else {
+			rpsGame.start = false;
+			batch.draw(gameOver, 0, 0);
+			if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+				rpsGame.goal = 10;
+				rpsGame.create();
+			}
+		}
+		
 		newRound = false;
 		
 		if(condition.buttonNum == 0) {
