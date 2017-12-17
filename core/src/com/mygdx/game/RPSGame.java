@@ -12,6 +12,7 @@ public class RPSGame extends Game {
 	
 	boolean start = false;
 	int card = 0;
+	int goal = 5;
 	
 	@Override
 	public void create () {

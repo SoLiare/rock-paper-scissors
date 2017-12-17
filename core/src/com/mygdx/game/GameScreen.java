@@ -28,7 +28,6 @@ public class GameScreen extends ScreenAdapter {
 	int bot = 0;
 	
 	boolean win = false;
-	int goal = 10;
 	int mash = 0;
 	int button = 4;
 	
@@ -49,6 +48,7 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	public void render (float delta) {
+		System.out.println(delta);
 		SpriteBatch batch = rpsGame.batch;
 		batch.begin();
 		batch.draw(bg, 0, 0);
@@ -114,10 +114,10 @@ public class GameScreen extends ScreenAdapter {
 				}
 			}
 			
-			if(goal == mash) {
+			if(rpsGame.goal == mash) {
 				win = true;
 			}
-			
+		
 			if(win) {
 				mash = 0;
 				condition.buttonNum = condition.buttonNum - 1;
@@ -131,10 +131,10 @@ public class GameScreen extends ScreenAdapter {
 			rpsGame.start = false;
 			batch.draw(nextStage, 0, 0);
 			if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+				rpsGame.goal = rpsGame.goal + 5;
 				rpsGame.create();
 			}
 		}
-		
 		batch.end();
 	}
 	

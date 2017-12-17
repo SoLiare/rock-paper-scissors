@@ -22,7 +22,7 @@ public class Condition {
 			}
 		}
 	}
-	
+
 	public int random () {
 		Random rand = new Random();
 		return rand.nextInt(4);
