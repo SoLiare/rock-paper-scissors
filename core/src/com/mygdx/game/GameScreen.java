@@ -34,7 +34,7 @@ public class GameScreen extends ScreenAdapter {
 	int mash = 0;
 	int button = 4;
 	int time = 0;
-	int limits = 200;
+	int limits = 85;
 	
 	int x = 300;
 	int yPlayer = 50;
@@ -143,6 +143,9 @@ public class GameScreen extends ScreenAdapter {
 		else if(condition.buttonNum > 0 && time >= limits) {
 			rpsGame.start = false;
 			batch.draw(gameOver, 0, 0);
+			if(rpsGame.level > rpsGame.highScore) {
+				rpsGame.highScore = rpsGame.level;
+			}
 			
 			drawText = new DrawText(batch, "Level: " + rpsGame.level + "\nHighest Level: " + rpsGame.highScore, 250, 300);
 			
